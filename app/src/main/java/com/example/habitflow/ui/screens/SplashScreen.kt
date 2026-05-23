@@ -54,13 +54,12 @@ fun SplashScreen(
                 .scale(scale.value)
                 .alpha(alpha.value)
         ) {
-            // هنا قمنا باستبدال الـ Icon بالـ Image وعرضنا اللوجو الخاص بك
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "HabitFlow Logo",
                 modifier = Modifier
                     .size(120.dp)
-                    .clip(RoundedCornerShape(24.dp)) // إعطاء حواف دائرية عصرية متناسقة مع M3
+                    .clip(RoundedCornerShape(24.dp))
             )
 
             Spacer(modifier = Modifier.height(24.dp))

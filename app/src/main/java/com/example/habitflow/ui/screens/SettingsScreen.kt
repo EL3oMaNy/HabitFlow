@@ -1,13 +1,19 @@
 package com.example.habitflow.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.Language
+import androidx.compose.material.icons.outlined.LightMode
+import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -32,7 +38,6 @@ fun SettingsScreen(
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
-                            // استخدام النسخة الحديثة (AutoMirrored) المدعومة من كوتلن
                             imageVector = if (isArabic) Icons.AutoMirrored.Filled.ArrowForward else Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null
                         )
@@ -45,21 +50,42 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            val themeTitle = if (isArabic) {
+                if (isDarkTheme) "الوضع الداكن" else "الوضع الفاتح"
+            } else {
+                if (isDarkTheme) "Dark Mode" else "Light Mode"
+            }
+
+            val themeSubtitle = if (isArabic) {
+                if (isDarkTheme) "التبديل إلى الوضع الفاتح" else "تفعيل الألوان الداكنة المريحة للعين"
+            } else {
+                if (isDarkTheme) "Switch to light mode" else "Enable eye-friendly dark colors"
+            }
+
+            val themeIcon = if (isDarkTheme) Icons.Outlined.LightMode else Icons.Outlined.DarkMode
+
             SettingSwitchItem(
-                title = if (isArabic) "الوضع الداكن" else "Dark Mode",
-                subtitle = if (isArabic) "تفعيل الألوان الداكنة المريحة للعين" else "Enable eye-friendly dark colors",
+                icon = themeIcon,
+                title = themeTitle,
+                subtitle = themeSubtitle,
                 isChecked = isDarkTheme,
                 onCheckedChange = onThemeChange
             )
 
-            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+
+            val langTitle = if (isArabic) "اللغة العربية" else "English Language"
+            val langSubtitle = if (isArabic) "التبديل إلى اللغة الإنجليزية" else "Switch to Arabic language"
+            val langIcon = if (isArabic) Icons.Outlined.Language else Icons.Outlined.Translate
 
             SettingSwitchItem(
-                title = if (isArabic) "اللغة العربية" else "Arabic Language",
-                subtitle = if (isArabic) "تبديل اتجاه ونصوص التطبيق" else "Toggle app layout and texts",
+                icon = langIcon,
+                title = langTitle,
+                subtitle = langSubtitle,
                 isChecked = isArabic,
                 onCheckedChange = onLanguageChange
             )
@@ -69,20 +95,33 @@ fun SettingsScreen(
 
 @Composable
 fun SettingSwitchItem(
+    icon: ImageVector,
     title: String,
     subtitle: String,
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onCheckedChange(!isChecked) }
+            .padding(horizontal = 16.dp, vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(28.dp)
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
             Text(text = subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
+
         Switch(
             checked = isChecked,
             onCheckedChange = onCheckedChange
