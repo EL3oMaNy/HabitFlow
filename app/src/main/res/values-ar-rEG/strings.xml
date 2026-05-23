@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">مسار العادات</string>
+    <string name="welcome_message">مرحباً بعودتك،</string>
+    <string name="progress_title">التقدم اليومي</string>
+</resources>
