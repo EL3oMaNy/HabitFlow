@@ -4,8 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material3.*
@@ -71,7 +71,7 @@ fun AddHabitScreen(
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
-                            imageVector = if (isArabic) Icons.Default.ArrowForward else Icons.Default.ArrowBack,
+                            imageVector = if (isArabic) Icons.AutoMirrored.Filled.ArrowForward else Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null
                         )
                     }
@@ -157,7 +157,6 @@ fun AddHabitScreen(
 
             Button(
                 onClick = {
-                    // 1. ترجمة التصنيف أوتوماتيكياً في الخلفية ليناسب اللغتين عند التبديل
                     val (catAr, catEn) = when (selectedCategory) {
                         "صحة", "Health" -> Pair("صحة", "Health")
                         "تعليم", "Learn" -> Pair("تعليم", "Learn")
@@ -166,7 +165,6 @@ fun AddHabitScreen(
                         else -> Pair(selectedCategory, selectedCategory)
                     }
 
-                    // 2. ضبط النص الفرعي للوقت بناءً على اللغتين لو سابه فاضي
                     val subAr = if (reminderTime.isNotEmpty()) reminderTime else "0 دقيقة"
                     val subEn = if (reminderTime.isNotEmpty()) reminderTime else "0 mins"
 

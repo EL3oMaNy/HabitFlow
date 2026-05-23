@@ -25,7 +25,6 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
 
-    // إنشاء لستة ديناميكية قابلة للتعديل والمراقبة (State)
     val habitsList = remember {
         mutableStateListOf(
             HabitModel("القراءة", "Reading", "30 دقيقة يومياً", "30 mins daily", "معرفي", "Knowledge", Icons.Outlined.Book, 1f, true),
@@ -50,7 +49,7 @@ fun AppNavigation(
         composable("dashboard") {
             DashboardScreen(
                 isArabic = isArabic,
-                habitsList = habitsList, // نمرر اللستة الديناميكية هنا
+                habitsList = habitsList,
                 onNavigateToAddHabit = { navController.navigate("add_habit") },
                 onNavigateToSettings = { navController.navigate("settings") }
             )
